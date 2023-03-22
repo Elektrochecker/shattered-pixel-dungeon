@@ -184,7 +184,7 @@ public class WndSettings extends WndTabbed {
 			}
 
 		};
-		add( langsTab );
+		// add( langsTab );
 
 		resize(width, (int)Math.ceil(height));
 

@@ -276,7 +276,7 @@ public class RingOfWealth extends Ring {
 				result = Generator.random(Generator.Category.RING);
 				break;
 			case 4:
-				result = Generator.random(Generator.Category.ARTIFACT);
+				result = Generator.random(Generator.Category.WAND);
 				break;
 		}
 		//minimum level is 1/2/3/4/5/6 when ring level is 1/3/5/7/9/11
