@@ -22,11 +22,13 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.wands;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Web;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Beam;
@@ -52,9 +54,16 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hex;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
 
 //battlemage exclusive effects
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Doom;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Dread;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Light;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FireImbue;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FrostImbue;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AdrenalineSurge;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bless;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Healing;
+//cleansing
+import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfCleansing;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LostInventory;
 
 import java.util.ArrayList;
 
@@ -135,16 +144,16 @@ public class WandOfChaos extends DamageWand {
 						if (Dungeon.level.water[ch.pos])
 							Buff.affect(ch, Chill.class, 2 + buffedLvl());
 						else
-							Buff.affect(ch, Chill.class, 1 + buffedLvl()/2);
+							Buff.affect(ch, Chill.class, 1 + buffedLvl() / 2);
 						break;
-					case 1: //blind
+					case 1: // blind
 						Buff.affect(ch, Blindness.class, 1 + buffedLvl());
 						break;
 					case 2:
 						Buff.affect(ch, Cripple.class, 1 + buffedLvl());
 						break;
 					case 3:
-						Buff.affect(ch, Amok.class, 1 + buffedLvl()/2);
+						Buff.affect(ch, Amok.class, 1 + buffedLvl() / 2);
 						break;
 					case 4:
 						Buff.affect(ch, Vertigo.class, 1 + buffedLvl());
@@ -159,7 +168,7 @@ public class WandOfChaos extends DamageWand {
 						Buff.affect(ch, Hex.class, 3 + buffedLvl());
 						break;
 					case 8:
-						Buff.affect(ch, Ooze.class).set( Ooze.DURATION * buffedLvl() );
+						Buff.affect(ch, Ooze.class).set(Ooze.DURATION * buffedLvl());
 						break;
 				}
 			}
@@ -168,41 +177,51 @@ public class WandOfChaos extends DamageWand {
 
 	@Override
 	public void onHit(MagesStaff staff, Char attacker, Char defender, int damage) {
-		if (defender.isAlive()) {
-				switch (Random.Int(9)) {
-					default:
-					case 0: // frost, stronger in water
-						if (Dungeon.level.water[defender.pos])
-							Buff.affect(defender, Chill.class, 4 + buffedLvl());
-						else
-							Buff.affect(defender, Chill.class, 2 + buffedLvl()/2);
-						break;
-					case 1: //blind
-						Buff.affect(defender, Blindness.class, 2 + buffedLvl());
-						break;
-					case 2:
-						Buff.affect(defender, Cripple.class, 2 + buffedLvl());
-						break;
-					case 3:
-						Buff.affect(defender, Dread.class).object = curUser.id();
-						break;
-					case 4:
-						Buff.affect(defender, Paralysis.class, 4 + buffedLvl());
-						break;
-					case 5:
-						Buff.affect(defender, Bleeding.class).set(buffedLvl(), getClass());
-						break;
-					case 6:
-						Buff.affect(defender, Doom.class);
-						break;
-					case 7:
-						Buff.affect(defender, Hex.class, 6 + buffedLvl());
-						break;
-					case 8:
-						Buff.affect(defender, Ooze.class).set( Ooze.DURATION * (buffedLvl()+1f)/(buffedLvl()+3f) );
-						break;
-				}
+		float procChance = 1f/2.5f*procChanceMultiplier(attacker);
+
+		if (defender.HP <= damage && Random.Float() < procChance) {
+			int buffOffset = ((Hero) attacker).pointsInTalent(Talent.EMPOWERED_STRIKE); // max. 3
+			switch (Random.Int(7)) {
+				default:
+				case 0:
+					if (Dungeon.isChallenged(Challenges.DARKNESS)) {
+						Buff.prolong(attacker, Light.class, 2f + buffedLvl());
+					} else {
+						Buff.prolong(attacker, Light.class, 10f + buffedLvl());
+					}
+					break;
+				case 1:
+					Buff.affect(attacker, FireImbue.class).set(2 + FireImbue.DURATION * 0.05f * buffedLvl());
+					break;
+				case 2:
+					Buff.affect(attacker, AdrenalineSurge.class).reset(1,
+							40 + AdrenalineSurge.DURATION * 0.04f * buffedLvl());
+					break;
+				case 3:
+					Buff.affect(attacker, FrostImbue.class, 2 + FrostImbue.DURATION * 0.05f * buffedLvl());
+					break;
+				case 4:
+					cleanse(attacker, 2);
+					break;
+				case 5:
+					Buff.prolong(attacker, Bless.class, 2 + Bless.DURATION * 0.1f * buffedLvl());
+					break;
+				case 6:
+					Buff.affect(attacker, Healing.class).setHeal(8 + buffedLvl() / 2, 0, 1);
+					break;
 			}
+		}
+	}
+
+	public static void cleanse(Char ch, float duration){
+		for (Buff b : ch.buffs()){
+			if (b.type == Buff.buffType.NEGATIVE
+					&& !(b instanceof AllyBuff)
+					&& !(b instanceof LostInventory)){
+				b.detach();
+			}
+		}
+		Buff.affect(ch, PotionOfCleansing.Cleanse.class, duration);
 	}
 
 	private int distance() {
