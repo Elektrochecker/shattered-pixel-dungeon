@@ -379,6 +379,7 @@ public class ItemSpriteSheet {
 	public static final int WAND_REGROWTH       = WANDS+11;
 	public static final int WAND_TRANSFUSION    = WANDS+12;
 	public static final int WAND_CHAOS		    = WANDS+13;
+	public static final int WAND_COSMOS		    = WANDS+14;
 	static {
 		for (int i = WANDS; i < WANDS+16; i++)
 			assignItemRect(i, 14, 14);
