@@ -11,8 +11,8 @@ buildscript {
 allprojects {
 
     ext {
-        appName = 'Dixel Pungeon'
-        appPackageName = 'com.shatteredpixel2.shatteredpixeldungeon2'
+        appName = 'Elektrocheckers Pixel Dungeon'
+        appPackageName = 'com.elektrochecker.shatteredpixeldungeonT'
 
         appVersionCode = 684
         appVersionName = '2.0.0T'
