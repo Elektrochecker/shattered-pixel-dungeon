@@ -43,35 +43,41 @@ public class WandOfCosmicTravel extends DamageWand {
 		collisionProperties = Ballistica.MAGIC_BOLT;
 	}
 
-	public int min(int lvl){
-		return 2*lvl;
+	public int min(int lvl) {
+		return 2 * lvl;
 	}
 
-	public int max(int lvl){
-		return 1+4*lvl;
+	public int max(int lvl) {
+		return 1 + 4 * lvl;
 	}
 
 	@Override
 	public void onZap(Ballistica beam) {
 
 		Char ch = Actor.findChar(beam.collisionPos);
-		if (ch != null){
+		if (ch != null) {
 			wandProc(ch, chargesPerCast());
 			affectTarget(ch);
 		}
 	}
 
-	private void affectTarget(Char ch){
+	private void affectTarget(Char ch) {
 		int dmg = damageRoll();
+		int immobileDmg = Math.round(dmg*3/2); //1.5x damage against immobile targets
 		int enemyPos = ch.pos;
 		int userPos = curUser.pos;
 
-		ScrollOfTeleportation.appear(curUser, enemyPos);
-		ScrollOfTeleportation.appear(ch, userPos);
-		Dungeon.observe();
-		GameScene.updateFog();
+		if (!ch.properties().contains(Char.Property.IMMOVABLE)) {
+			ScrollOfTeleportation.appear(curUser, enemyPos);
+			ScrollOfTeleportation.appear(ch, userPos);
+			Dungeon.observe();
+			GameScene.updateFog();
 
-		ch.damage(dmg, this);
+			ch.damage(dmg, this);
+		} else {
+			ch.damage(immobileDmg, this);
+		}
+		
 	}
 
 	@Override
@@ -86,20 +92,24 @@ public class WandOfCosmicTravel extends DamageWand {
 		int enemyPos = defender.pos;
 		int userPos = curUser.pos;
 
+		if (!defender.properties().contains(Char.Property.IMMOVABLE)) {
 		ScrollOfTeleportation.appear(curUser, enemyPos);
 		ScrollOfTeleportation.appear(defender, userPos);
 		Dungeon.observe();
 		GameScene.updateFog();
+		} else {
+			defender.damage(damage/5*(int)procChanceMultiplier(attacker), attacker);
+		}
 	}
 
 	@Override
 	public void staffFx(MagesStaff.StaffParticle particle) {
-		particle.color( Random.Int( 0x1000000 ) );
+		particle.color(Random.Int(0x0000FF));
 		particle.am = 0.5f;
 		particle.setLifespan(1f);
 		particle.speed.polar(Random.Float(PointF.PI2), 2f);
-		particle.setSize( 1f, 2f);
-		particle.radiateXY( 0.5f);
+		particle.setSize(1f, 2f);
+		particle.radiateXY(0.5f);
 	}
 
 }
