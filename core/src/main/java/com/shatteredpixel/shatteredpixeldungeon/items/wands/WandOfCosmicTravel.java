@@ -24,6 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.items.wands;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Beam;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
@@ -44,11 +45,11 @@ public class WandOfCosmicTravel extends DamageWand {
 	}
 
 	public int min(int lvl) {
-		return 2 * lvl;
+		return 1 + lvl;
 	}
 
 	public int max(int lvl) {
-		return 1 + 4 * lvl;
+		return 2 + 5 * lvl;
 	}
 
 	@Override
@@ -63,7 +64,6 @@ public class WandOfCosmicTravel extends DamageWand {
 
 	private void affectTarget(Char ch) {
 		int dmg = damageRoll();
-		int immobileDmg = Math.round(dmg*3/2); //1.5x damage against immobile targets
 		int enemyPos = ch.pos;
 		int userPos = curUser.pos;
 
@@ -73,11 +73,10 @@ public class WandOfCosmicTravel extends DamageWand {
 			Dungeon.observe();
 			GameScene.updateFog();
 
-			ch.damage(dmg, this);
 		} else {
-			ch.damage(immobileDmg, this);
+			dmg *= 3 / 2;
 		}
-		
+		ch.damage(dmg, this);
 	}
 
 	@Override
@@ -91,20 +90,23 @@ public class WandOfCosmicTravel extends DamageWand {
 	public void onHit(MagesStaff staff, Char attacker, Char defender, int damage) {
 		int enemyPos = defender.pos;
 		int userPos = curUser.pos;
+		float procChance = 1f / 2.5f * procChanceMultiplier(attacker);
 
-		if (!defender.properties().contains(Char.Property.IMMOVABLE)) {
-		ScrollOfTeleportation.appear(curUser, enemyPos);
-		ScrollOfTeleportation.appear(defender, userPos);
-		Dungeon.observe();
-		GameScene.updateFog();
-		} else {
-			defender.damage(damage/5*(int)procChanceMultiplier(attacker), attacker);
+		if (Random.Float() < procChance) {
+			if (!defender.properties().contains(Char.Property.IMMOVABLE)) {
+				ScrollOfTeleportation.appear(curUser, enemyPos);
+				ScrollOfTeleportation.appear(defender, userPos);
+				Dungeon.observe();
+				GameScene.updateFog();
+			} else {
+				defender.damage(damage / 5 * (int) procChanceMultiplier(attacker), attacker);
+			}
 		}
 	}
 
 	@Override
 	public void staffFx(MagesStaff.StaffParticle particle) {
-		particle.color(Random.Int(0x0000FF));
+		particle.color(Random.Int(0x0000FF)); // random blue color
 		particle.am = 0.5f;
 		particle.setLifespan(1f);
 		particle.speed.polar(Random.Float(PointF.PI2), 2f);
