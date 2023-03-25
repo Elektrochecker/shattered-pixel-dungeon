@@ -42,31 +42,28 @@ import java.util.ArrayList;
 public class v2_X_Changes {
 
 	public static void addAllChanges( ArrayList<ChangeInfo> changeInfos ){
-		add_Coming_Soon(changeInfos);
+		add_Modded_Content(changeInfos);
 		add_v2_0_Changes(changeInfos);
 	}
 
-	public static void add_Coming_Soon( ArrayList<ChangeInfo> changeInfos ) {
+	public static void add_Modded_Content( ArrayList<ChangeInfo> changeInfos ) {
 
-		ChangeInfo changes = new ChangeInfo("Coming Soon", true, "");
-		changes.hardlight(0xCCCCCC);
+		ChangeInfo changes = new ChangeInfo("Elektrocheckers new Content", true, "");
+		changes.hardlight(0x0020DD);
 		changeInfos.add(changes);
 
-		changes.addButton( new ChangeButton(Icons.get(Icons.SHPX), "Overview",
-				"My current plan is for the next major update to be v2.1.0, which will mostly be focused on responding to any balance or general gameplay issues that appear as dust settles from the Duelist's release.\n\n" +
-				"I don't yet have a specific timeline for v2.1.0, but I think it's a safe bet that you'll hear from me about it sometime in late April or May. Please keep in mind that while I always try to keep to the ETAs I provide, they are just estimates. If you don't hear from me by the ETA, it means I'm still busy with the update!"));
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.WAND_COSMOS), "Wand of cosmic travel",
+				"This wand shoots a beam that collides with the first enemy hit, and swaps it's place with the caster's,dealing damage in the process. Immobile units hit will suffer bonus damage instead of being teleported.\n\n"+
+				"The base damage of this wand is unusually low, but it has good upgrade scaling. This is to not make the wand's utility at low levels too strong, but still give the upgraded wand enough damage"
+		));
 
-		changes.addButton( new ChangeButton(HeroSprite.avatar(HeroClass.DUELIST, 6), "Hero Changes",
-				"The largest changes in v2.1.0 will be focused around the game's heroes, with a big emphasis on the Duelist. I'm generally happy with how she performed during the beta, but such a large addition to the game is definitely going to need some refinement over time. I may also make some smaller changes to the other heroes as well, depending on how things shake out. "));
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.WAND_CHAOS), "Wand of chaos",
+				"This wand shoots a beam that pierces terrain, will go farther the more it is upgraded, and will apply random debuffs to enemies hit, dealing damage.\n\n"
+		));
 
-		changes.addButton( new ChangeButton(Icons.get(Icons.TALENT), "Side Content",
-				"v2.1.0 will also include some amount of side content, but it will probably be fairly small. I plan to add a couple new exotic enemies, and there might be room for one or two other little things as well."));
-
-		changes.addButton( new ChangeButton(Icons.get(Icons.PREFS), "Smaller Fixes",
-				"There will also be more miscellaneous changes and bugfixes! Despite all of the fixes I've made in v2.0.0, my list of things to do has actually grown! I'd like to spend a bit of time keeping that list in check."));
-
-		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.PICKAXE), "Blacksmith Quest?",
-				"And no I haven't forgotten about the blacksmith's quest! I will likely do some concepting or internal technical work for it during v2.1.0's development, but the quest rework itself is more likely to be part of v2.2.0."));
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.RING_SAPPHIRE), "Ring of Wealth",
+				"The Ring of Wealth now drops upgraded Wands instead of Artifacts. This makes it sronger than Shattered's Ring of Wealth.\n\n"
+		));
 
 	}
 
