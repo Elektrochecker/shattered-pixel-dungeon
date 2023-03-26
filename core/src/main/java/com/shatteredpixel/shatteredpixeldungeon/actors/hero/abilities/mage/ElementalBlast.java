@@ -375,7 +375,7 @@ public class ElementalBlast extends ArmorAbility {
 									}
 								} else if (finalWandCls == WandOfChaos.class) {
 									if (mob.isAlive() && mob.alignment != Char.Alignment.ALLY) {
-										Buff.affect(mob, Hex.class, effectMulti * 5f);
+										Buff.affect(mob, Hex.class, 5 + effectMulti * 5f);
 										charsHit++;
 									}
 									

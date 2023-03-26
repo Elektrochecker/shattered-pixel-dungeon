@@ -53,7 +53,7 @@ public class v2_X_Changes {
 		changeInfos.add(changes);
 
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.WAND_COSMOS), "Wand of cosmic travel",
-				"This wand shoots a beam that collides with the first enemy hit, and swaps it's place with the caster's,dealing damage in the process. Immobile units hit will suffer bonus damage instead of being teleported.\n\n"+
+				"This wand shoots a beam that collides with the first enemy hit, and swaps it's place with the caster's, dealing damage in the process. Immobile units hit will suffer bonus damage instead of being teleported.\n\n"+
 				"The base damage of this wand is unusually low, but it has good upgrade scaling. This is to not make the wand's utility at low levels too strong, but still give the upgraded wand enough damage"
 		));
 
