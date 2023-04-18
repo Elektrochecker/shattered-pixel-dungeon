@@ -71,9 +71,9 @@ public class v2_X_Changes {
 		));
 
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.SEED_SUNGRASS), "Dungeon Seeds featuring the new Items",
-			"\n"
-				+"\n"
-				+""
+			 "orb of sacrifice: 		2049\n"
+			+"wand of cosmic travel: 	2698\n"
+			+"wand of chaos: 			633"
 		));
 
 	}
