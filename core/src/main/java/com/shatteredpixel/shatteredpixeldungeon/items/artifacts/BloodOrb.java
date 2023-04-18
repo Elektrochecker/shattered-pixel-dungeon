@@ -154,7 +154,7 @@ public class BloodOrb extends Artifact {
 							for (int cell : aoe.cells) {
 								Char mob = Actor.findChar(cell);
 								if (mob != null && !mob.properties().contains(Char.Property.INORGANIC)) {
-									Buff.affect(mob, Bleeding.class).set(level() + 1, BloodOrb.class);
+									Buff.affect(mob, Bleeding.class).set(level() + 2, BloodOrb.class);
 								}
 							}
 						}
@@ -162,8 +162,8 @@ public class BloodOrb extends Artifact {
 		}
 		// also apply bleed to targeted point
 		Char t = Actor.findChar(target);
-		if (t != null) {
-			Buff.affect(t, Bleeding.class).set(level() + 2, BloodOrb.class);
+		if (t != null && !t.properties().contains(Char.Property.INORGANIC)) {
+			Buff.affect(t, Bleeding.class).set(level() + 3, BloodOrb.class);
 		}
 
 		// pay life cost
@@ -171,7 +171,7 @@ public class BloodOrb extends Artifact {
 		dmgCost = Math.max(dmgCost, hero.lvl / 5 + 1);
 		dmgCost /= RingOfTenacity.damageMultiplier(hero);
 		exp += dmgCost;
-		dmgCost /= 1 + (RingOfEnergy.artifactChargeMultiplier(hero)-1)/2;
+		dmgCost /= 1 + (RingOfEnergy.artifactChargeMultiplier(hero) - 1) / 2;
 		hero.damage(dmgCost, this);
 
 		// upgrade the artifact
