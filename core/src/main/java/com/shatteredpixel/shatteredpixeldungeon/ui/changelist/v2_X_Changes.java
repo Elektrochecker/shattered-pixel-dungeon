@@ -62,11 +62,18 @@ public class v2_X_Changes {
 		));
 
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.ARTIFACT_ORB), "Orb of sacrifice",
-				"This new artifact inflicts blood loss on enemies. It has no charge limitation, but the user pays in blood.\n\nlife cost: current HP / 5 + hero level / 3\n1 additional range per artifact level"
+				"This new artifact inflicts blood loss on enemies. It has no charge limitation, but the user pays in blood. The directly targeted enemy gets 1 more bleed damage (translates to more than 1 damage)\n\n"
+				+"HP cost is reduced by ring of Energy's artefact recharging and Ring of tenacity. Tenacity reduces exp gained to artifact level, Ring of energy does not.\n\n1 additional range per artifact level"
 		));
 
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.RING_SAPPHIRE), "Ring of Wealth",
 				"The Ring of Wealth now drops upgraded Wands instead of Artifacts. This makes it sronger than Shattered's Ring of Wealth."
+		));
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.SEED_SUNGRASS), "Dungeon Seeds featuring the new Items",
+			"\n"
+				+"\n"
+				+""
 		));
 
 	}

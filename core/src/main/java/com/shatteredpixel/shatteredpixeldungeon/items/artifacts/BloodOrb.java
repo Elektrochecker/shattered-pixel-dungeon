@@ -26,31 +26,21 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Cripple;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LockedFloor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bleeding;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
-import com.shatteredpixel.shatteredpixeldungeon.effects.Chains;
-import com.shatteredpixel.shatteredpixeldungeon.effects.Effects;
-import com.shatteredpixel.shatteredpixeldungeon.effects.Pushing;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfTenacity;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.ConeAOE;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
-import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
-import com.shatteredpixel.shatteredpixeldungeon.utils.BArray;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
-import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
@@ -124,7 +114,7 @@ public class BloodOrb extends Artifact {
 
 				int range = 3 + level();
 				if (Dungeon.level.distance(curUser.pos, target) > range) {
-					GLog.w(Messages.get(EtherealChains.class, "cant_reach"));
+					GLog.w(Messages.get(BloodOrb.class, "cant_reach"));
 					return;
 				}
 
@@ -164,7 +154,7 @@ public class BloodOrb extends Artifact {
 							for (int cell : aoe.cells) {
 								Char mob = Actor.findChar(cell);
 								if (mob != null && !mob.properties().contains(Char.Property.INORGANIC)) {
-									Buff.affect(mob, Bleeding.class).set(level(), BloodOrb.class);
+									Buff.affect(mob, Bleeding.class).set(level() + 1, BloodOrb.class);
 								}
 							}
 						}
@@ -173,20 +163,23 @@ public class BloodOrb extends Artifact {
 		// also apply bleed to targeted point
 		Char t = Actor.findChar(target);
 		if (t != null) {
-			Buff.affect(t, Bleeding.class).set(level(), BloodOrb.class);
+			Buff.affect(t, Bleeding.class).set(level() + 2, BloodOrb.class);
 		}
 
 		// pay life cost
-		int dmgCost = hero.HP / 5 + hero.lvl/3;
+		int dmgCost = hero.HP / 5;
+		dmgCost = Math.max(dmgCost, hero.lvl / 5 + 1);
+		dmgCost /= RingOfTenacity.damageMultiplier(hero);
+		exp += dmgCost;
+		dmgCost /= 1 + (RingOfEnergy.artifactChargeMultiplier(hero)-1)/2;
 		hero.damage(dmgCost, this);
 
 		// upgrade the artifact
-		exp += dmgCost;
-		int expNeeded = 20 + level() * 20;
+		int expNeeded = 15 + level() * 20;
 		if (exp > expNeeded && level() < levelCap) {
-				exp -= expNeeded;
-				GLog.p(Messages.get(this, "levelup"));
-				upgrade();
+			exp -= expNeeded;
+			GLog.p(Messages.get(this, "levelup"));
+			upgrade();
 		}
 
 		// sounds and animations
