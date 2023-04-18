@@ -58,11 +58,15 @@ public class v2_X_Changes {
 		));
 
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.WAND_CHAOS), "Wand of chaos",
-				"This wand shoots a beam that pierces terrain, will go farther the more it is upgraded, and will apply random debuffs to enemies hit, dealing damage.\n\n"
+				"This wand shoots a beam that pierces terrain, will go farther the more it is upgraded, and will apply random debuffs to enemies hit, dealing damage."
+		));
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.ARTIFACT_ORB), "Orb of sacrifice",
+				"This new artifact inflicts blood loss on enemies. It has no charge limitation, but the user pays in blood.\n\nlife cost: current HP / 5 + hero level / 3\n1 additional range per artifact level"
 		));
 
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.RING_SAPPHIRE), "Ring of Wealth",
-				"The Ring of Wealth now drops upgraded Wands instead of Artifacts. This makes it sronger than Shattered's Ring of Wealth.\n\n"
+				"The Ring of Wealth now drops upgraded Wands instead of Artifacts. This makes it sronger than Shattered's Ring of Wealth."
 		));
 
 	}

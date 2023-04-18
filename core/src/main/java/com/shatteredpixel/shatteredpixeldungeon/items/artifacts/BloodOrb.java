@@ -100,9 +100,9 @@ public class BloodOrb extends Artifact {
 				GLog.i(Messages.get(Artifact.class, "need_to_equip"));
 				usesTargeting = false;
 
-			// } else if (charge < 1) {
-			// 	GLog.i(Messages.get(this, "no_charge"));
-			// 	usesTargeting = false;
+				// } else if (charge < 1) {
+				// GLog.i(Messages.get(this, "no_charge"));
+				// usesTargeting = false;
 
 			} else if (cursed) {
 				GLog.w(Messages.get(this, "cursed"));
@@ -153,8 +153,6 @@ public class BloodOrb extends Artifact {
 		int projectileProps = Ballistica.STOP_TARGET;
 		ConeAOE aoe = new ConeAOE(aim, aoeSize, 360, projectileProps);
 
-		int charsHit = 0;
-
 		for (Ballistica ray : aoe.outerRays) {
 			((MagicMissile) hero.sprite.parent.recycle(MagicMissile.class)).reset(
 					MagicMissile.BLOOD_CONE,
@@ -166,22 +164,35 @@ public class BloodOrb extends Artifact {
 							for (int cell : aoe.cells) {
 								Char mob = Actor.findChar(cell);
 								if (mob != null && !mob.properties().contains(Char.Property.INORGANIC)) {
-									Buff.affect(mob, Bleeding.class).set(2, BloodOrb.class);
-									// charsHit++;
+									Buff.affect(mob, Bleeding.class).set(level(), BloodOrb.class);
 								}
 							}
 						}
 					});
-				}
-		//apply bleed to targeted point also
+		}
+		// also apply bleed to targeted point
 		Char t = Actor.findChar(target);
-		Buff.affect(t, Bleeding.class).set(2, BloodOrb.class);
-		charsHit++;
-		// pay cost / RingOfEnergy.artifactChargeMultiplier(target);
-		upgrade();
+		if (t != null) {
+			Buff.affect(t, Bleeding.class).set(level(), BloodOrb.class);
+		}
 
+		// pay life cost
+		int dmgCost = hero.HP / 5 + hero.lvl/3;
+		hero.damage(dmgCost, this);
+
+		// upgrade the artifact
+		exp += dmgCost;
+		int expNeeded = 20 + level() * 20;
+		if (exp > expNeeded && level() < levelCap) {
+				exp -= expNeeded;
+				GLog.p(Messages.get(this, "levelup"));
+				upgrade();
+		}
+
+		// sounds and animations
 		throwSound();
 		Sample.INSTANCE.play(Assets.Sounds.CHARGEUP);
+		hero.sprite.operate(target);
 		hero.busy();
 		hero.spend(1f);
 		hero.next();
@@ -190,21 +201,6 @@ public class BloodOrb extends Artifact {
 	@Override
 	protected ArtifactBuff passiveBuff() {
 		return new orbRecharge();
-	}
-
-	@Override
-	public void charge(Hero target, float amount) {
-		if (cursed || target.buff(MagicImmune.class) != null)
-			return;
-		int chargeTarget = 5 + (level() * 2);
-		if (charge < chargeTarget * 2) {
-			partialCharge += 0.5f * amount;
-			if (partialCharge >= 1) {
-				partialCharge--;
-				charge++;
-				updateQuickslot();
-			}
-		}
 	}
 
 	@Override
@@ -232,20 +228,6 @@ public class BloodOrb extends Artifact {
 			updateQuickslot();
 			spend(TICK);
 			return true;
-		}
-
-		public void gainExp(float levelPortion) {
-			if (cursed || target.buff(MagicImmune.class) != null || levelPortion == 0)
-				return;
-
-			exp += Math.round(levelPortion * 100);
-
-			if (exp > 100 + level() * 100 && level() < levelCap) {
-				exp -= 100 + level() * 100;
-				GLog.p(Messages.get(this, "levelup"));
-				upgrade();
-			}
-
 		}
 	}
 }
