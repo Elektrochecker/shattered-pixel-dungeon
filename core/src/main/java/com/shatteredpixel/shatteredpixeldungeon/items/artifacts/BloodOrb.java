@@ -90,10 +90,6 @@ public class BloodOrb extends Artifact {
 				GLog.i(Messages.get(Artifact.class, "need_to_equip"));
 				usesTargeting = false;
 
-				// } else if (charge < 1) {
-				// GLog.i(Messages.get(this, "no_charge"));
-				// usesTargeting = false;
-
 			} else if (cursed) {
 				GLog.w(Messages.get(this, "cursed"));
 				usesTargeting = false;
@@ -154,7 +150,7 @@ public class BloodOrb extends Artifact {
 							for (int cell : aoe.cells) {
 								Char mob = Actor.findChar(cell);
 								if (mob != null && !mob.properties().contains(Char.Property.INORGANIC)) {
-									Buff.affect(mob, Bleeding.class).set(level() + 2, BloodOrb.class);
+									Buff.affect(mob, Bleeding.class).set((int) Math.floor(level() * 1.3f + 3),BloodOrb.class);
 								}
 							}
 						}
@@ -163,19 +159,19 @@ public class BloodOrb extends Artifact {
 		// also apply bleed to targeted point
 		Char t = Actor.findChar(target);
 		if (t != null && !t.properties().contains(Char.Property.INORGANIC)) {
-			Buff.affect(t, Bleeding.class).set(level() + 3, BloodOrb.class);
+			Buff.affect(t, Bleeding.class).set((int) Math.floor(level() * 1.3f + 4), BloodOrb.class);
 		}
 
 		// pay life cost
 		int dmgCost = hero.HP / 5;
 		dmgCost = Math.max(dmgCost, hero.lvl / 5 + 1);
+		exp += dmgCost + 2;
 		dmgCost /= RingOfTenacity.damageMultiplier(hero);
-		exp += dmgCost;
 		dmgCost /= 1 + (RingOfEnergy.artifactChargeMultiplier(hero) - 1) / 2;
 		hero.damage(dmgCost, this);
 
 		// upgrade the artifact
-		int expNeeded = 15 + level() * 20;
+		int expNeeded = 25 + level() * 10;
 		if (exp > expNeeded && level() < levelCap) {
 			exp -= expNeeded;
 			GLog.p(Messages.get(this, "levelup"));
@@ -218,7 +214,6 @@ public class BloodOrb extends Artifact {
 				Buff.affect(target, Bleeding.class).set(2, BloodOrb.class);
 			}
 
-			updateQuickslot();
 			spend(TICK);
 			return true;
 		}
