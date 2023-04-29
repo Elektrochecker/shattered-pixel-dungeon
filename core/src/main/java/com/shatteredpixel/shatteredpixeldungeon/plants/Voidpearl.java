@@ -21,31 +21,20 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.plants;
 
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
-import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
-import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.InterlevelScene;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.watabou.noosa.Game;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.effects.particles.PitfallParticle;
+import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
-import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
+import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfCleansing;
+import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.utils.Bundle;
-import com.watabou.utils.PathFinder;
+import com.watabou.noosa.audio.Sample;
 
 public class Voidpearl extends Plant {
 
@@ -62,26 +51,32 @@ public class Voidpearl extends Plant {
 			((Hero) ch).curAction = null;
 
 			if (((Hero) ch).subClass == HeroSubClass.WARDEN) {
-
-				GLog.i("voidpearl warden effect");
-
+				PotionOfCleansing.cleanse(ch, 1);
 			} else {
-				// Dungeon.fail( Voidpearl.class );
+
 				ch.die(Voidpearl.class);
 				if (!ch.isAlive()) {
-					GLog.n("the voidpearl consumes your existence");
+					GLog.n(Messages.get(this, "ondeath"));
+					Dungeon.fail(Voidpearl.class);
 				}
 			}
 
-		} else if (ch instanceof Mob && !ch.properties().contains(Char.Property.BOSS)) {
+		} else if (ch instanceof Mob && !ch.properties().contains(Char.Property.BOSS)
+				&& !ch.properties().contains(Char.Property.MINIBOSS)) {
 
 			if (ch.isAlive())
 				ch.die(Voidpearl.class);
+		}
 
+		//destroy all items on this tile
+		Heap heap = Dungeon.level.heaps.get(pos);
+		if (heap != null) {
+			heap.destroy();
 		}
 
 		if (Dungeon.level.heroFOV[pos]) {
-			CellEmitter.get(pos).start(Speck.factory(Speck.LIGHT), 0.2f, 3);
+			CellEmitter.get(pos).burst(ShadowParticle.UP, 5);
+			Sample.INSTANCE.play(Assets.Sounds.CURSED);
 		}
 	}
 
@@ -92,12 +87,4 @@ public class Voidpearl extends Plant {
 			plantClass = Voidpearl.class;
 		}
 	}
-
-	// @Override
-	// public void onDeath() {
-	// // Badges.validateDeathFromFalling();
-
-	// Dungeon.fail( Voidpearl.class );
-	// GLog.n( Messages.get(Voidpearl.class, "ondeath") );
-	// }
 }
