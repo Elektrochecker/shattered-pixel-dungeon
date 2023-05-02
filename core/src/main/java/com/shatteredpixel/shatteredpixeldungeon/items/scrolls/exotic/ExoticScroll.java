@@ -35,6 +35,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRetributio
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTerror;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTransmutation;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTrauma;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.watabou.utils.Reflection;
 
@@ -64,6 +65,9 @@ public abstract class ExoticScroll extends Scroll {
 		
 		regToExo.put(ScrollOfTerror.class, ScrollOfDread.class);
 		exoToReg.put(ScrollOfDread.class, ScrollOfTerror.class);
+
+		regToExo.put(ScrollOfTrauma.class, ScrollOfDamnation.class);
+		exoToReg.put(ScrollOfDamnation.class, ScrollOfTrauma.class);
 		
 		regToExo.put(ScrollOfRecharging.class, ScrollOfMysticalEnergy.class);
 		exoToReg.put(ScrollOfMysticalEnergy.class, ScrollOfRecharging.class);
@@ -107,7 +111,7 @@ public abstract class ExoticScroll extends Scroll {
 	}
 	
 	@Override
-	//20 gold more than its none-exotic equivalent
+	//30 gold more than its none-exotic equivalent
 	public int value() {
 		return (Reflection.newInstance(exoToReg.get(getClass())).value() + 30) * quantity;
 	}
