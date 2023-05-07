@@ -35,6 +35,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRetributio
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTerror;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTransmutation;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTrauma;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ExoticScroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.Runestone;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
@@ -56,7 +57,7 @@ public class ArcaneCatalyst extends Spell {
 		scrollChances.put( ScrollOfIdentify.class,      3f );
 		scrollChances.put( ScrollOfRemoveCurse.class,   2f );
 		scrollChances.put( ScrollOfMagicMapping.class,  2f );
-		scrollChances.put( ScrollOfMirrorImage.class,   2f );
+		scrollChances.put( ScrollOfTrauma.class,   		2f );
 		scrollChances.put( ScrollOfRecharging.class,    2f );
 		scrollChances.put( ScrollOfLullaby.class,       2f );
 		scrollChances.put( ScrollOfRetribution.class,   2f );

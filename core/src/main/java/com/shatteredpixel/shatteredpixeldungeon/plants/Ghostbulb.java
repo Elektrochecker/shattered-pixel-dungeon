@@ -55,7 +55,19 @@ public class Ghostbulb extends Plant {
 
 	@Override
 	public void activate(final Char ch) {
+		spawnGhosts(ch);
+	}
 
+	public static class Seed extends Plant.Seed {
+		{
+			image = ItemSpriteSheet.SEED_GHOSTBULB;
+
+			plantClass = Ghostbulb.class;
+		}
+	}
+
+	public static void spawnGhosts(Char ch) {
+		
 		if (ch instanceof Hero) {
 
 			((Hero) ch).curAction = null;
@@ -71,7 +83,7 @@ public class Ghostbulb extends Plant {
 			ArrayList<Integer> spawnPoints = new ArrayList<>();
 
 			for (int i = 0; i < PathFinder.NEIGHBOURS8.length; i++) {
-				int p = this.pos + PathFinder.NEIGHBOURS8[i];
+				int p = ch.pos + PathFinder.NEIGHBOURS8[i];
 				if (Actor.findChar(p) == null && (Dungeon.level.passable[p] || Dungeon.level.avoid[p])) {
 					spawnPoints.add(p);
 				}
@@ -126,18 +138,10 @@ public class Ghostbulb extends Plant {
 			}
 		}
 
-		if (Dungeon.level.heroFOV[pos])
+		if (Dungeon.level.heroFOV[ch.pos])
 
 		{
-			CellEmitter.get(pos).start(Speck.factory(Speck.LIGHT), 0.2f, 3);
-		}
-	}
-
-	public static class Seed extends Plant.Seed {
-		{
-			image = ItemSpriteSheet.SEED_GHOSTBULB;
-
-			plantClass = Ghostbulb.class;
+			CellEmitter.get(ch.pos).start(Speck.factory(Speck.LIGHT), 0.2f, 3);
 		}
 	}
 }

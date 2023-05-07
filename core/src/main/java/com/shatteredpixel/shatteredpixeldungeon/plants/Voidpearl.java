@@ -86,5 +86,15 @@ public class Voidpearl extends Plant {
 
 			plantClass = Voidpearl.class;
 		}
+
+		@Override
+		public int value() {
+			return 50 * quantity;
+		}
+
+		@Override
+		public int energyVal() {
+			return 4 * quantity;
+		}
 	}
 }

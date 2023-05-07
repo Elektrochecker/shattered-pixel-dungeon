@@ -333,6 +333,8 @@ public class ItemSpriteSheet {
 	public static final int HOLY_DART       = DARTS+10;
 	public static final int DISPLACING_DART = DARTS+11;
 	public static final int BLINDING_DART   = DARTS+12;
+	public static final int GHOST_DART   	= DARTS+13;
+	public static final int VOID_DART   	= DARTS+14;
 	static {
 		for (int i = DARTS; i < DARTS+16; i++)
 			assignItemRect(i, 15, 15);

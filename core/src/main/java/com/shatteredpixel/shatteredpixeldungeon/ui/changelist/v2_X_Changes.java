@@ -21,18 +21,14 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.ui.changelist;
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.ElementalStrike;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Feint;
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.ChangesScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
 import com.watabou.noosa.Image;
@@ -42,8 +38,44 @@ import java.util.ArrayList;
 public class v2_X_Changes {
 
 	public static void addAllChanges( ArrayList<ChangeInfo> changeInfos ){
+		add_modded_updates(changeInfos);
 		add_Modded_Content(changeInfos);
 		add_v2_0_Changes(changeInfos);
+	}
+
+	public static void add_modded_updates( ArrayList<ChangeInfo> changeInfos ) {
+		ChangeInfo changes = new ChangeInfo("v2.0.0T3 updates", true, "");
+		changes.hardlight(0x4060DD);
+		changeInfos.add(changes);
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.EXOTIC_JERA), "New scrolls",
+				"The scroll of trauma and corresponding exotic scroll of damnation can now be acquired.\n\n" +
+				"A scroll of Trauma will inflict enemies in sight with 60 turns of HEX.\n\n" +
+				"A scroll of damnation will inflict doom to all enemies instead."
+		));
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.SEED_VOIDPEARL), "New Plants",
+				"Ghostbulb and Voidpearl are new plants which can be found in the dungeon.\n\n" +
+				"Trampling a ghostbulb will summon a mirror image to aid the trampler in combat.\n\n" +
+				"Trampling a Voidpearl will kill the Target and remove any Item on the same Tile from the Game.\n\n\n" +
+				"Trampling a blindweed as the warden now grants illumination instead of invisibility."
+		));
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.VOID_DART), "New Darts",
+				"New Darts were added to complement the new seed types.\n\n" +
+				"Ghost darts will summon copies of both the user and target of the dart.\n\n" +
+				"Void darts will deal flat damage to their target."
+		));
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.SCROLL_NAUDIZ), "Scroll of mirror image",
+				"The scroll of mirror image has benn removed. Why? Cause fuck 'em, that's why."
+		));
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.ARTIFACT_TOOLKIT), "Changed recipes",
+				"Wooly bomb now requires a stone of flock instead of a scroll of mirror image.\n\n" +
+				"Using seeds of ghostbulb to make potions will result in a potion of invisibility. Voidpearl seeds will make a potion of experience.\n" +
+				"Maybe I will add new potions in the future."
+		));
 	}
 
 	public static void add_Modded_Content( ArrayList<ChangeInfo> changeInfos ) {
@@ -68,12 +100,6 @@ public class v2_X_Changes {
 
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.RING_SAPPHIRE), "Ring of Wealth",
 				"The Ring of Wealth now drops upgraded Wands instead of Artifacts. This makes it sronger than Shattered's Ring of Wealth."
-		));
-
-		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.SEED_SUNGRASS), "Dungeon Seeds featuring the new Items",
-			 "orb of sacrifice: 		2049\n"
-			+"wand of cosmic travel: 	2698\n"
-			+"wand of chaos: 			633"
 		));
 
 	}

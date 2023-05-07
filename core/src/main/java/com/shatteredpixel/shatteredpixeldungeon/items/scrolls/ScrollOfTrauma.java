@@ -49,7 +49,7 @@ public class ScrollOfTrauma extends Scroll {
 		Mob affected = null;
 		for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
 			if (mob.properties().contains(Char.Property.BOSS) || mob.properties().contains(Char.Property.MINIBOSS)) {
-
+				Buff.affect(mob, Hex.class, Hex.DURATION * 0.6f);
 			} else if (mob.alignment != Char.Alignment.ALLY && Dungeon.level.heroFOV[mob.pos]) {
 				Buff.affect(mob, Hex.class, Hex.DURATION * 2);
 
