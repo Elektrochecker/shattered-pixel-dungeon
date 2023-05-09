@@ -27,8 +27,10 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.LeafParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
+import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
+import com.shatteredpixel.shatteredpixeldungeon.plants.Voidpearl;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.watabou.utils.Random;
 
@@ -42,7 +44,14 @@ public class Overgrowth extends Armor.Glyph {
 		float procChance = 1/20f * procChanceMultiplier(defender);
 		if ( Random.Float() < procChance ) {
 
-			Plant p = ((Plant.Seed) Generator.randomUsingDefaults(Generator.Category.SEED)).couch(defender.pos, null);
+			Item s = Generator.randomUsingDefaults(Generator.Category.SEED);
+
+			//we do not want the curse to immediatley kill the player
+			while(s instanceof Voidpearl.Seed) {
+				s = Generator.randomUsingDefaults(Generator.Category.SEED);
+			}
+
+			Plant p = ((Plant.Seed) s).couch(defender.pos, null);
 			
 			//momentarily revoke warden benefits, otherwise this curse would be incredibly powerful
 			if (defender instanceof Hero && ((Hero) defender).subClass == HeroSubClass.WARDEN){

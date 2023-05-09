@@ -11,7 +11,7 @@ public class VoidDart extends TippedDart {
 	
 	@Override
 	public int proc( Char attacker, Char defender, int damage ) {
-		defender.damage(20, this);
+		defender.damage(25, this);
 		return super.proc( attacker, defender, damage );
 	}
 	

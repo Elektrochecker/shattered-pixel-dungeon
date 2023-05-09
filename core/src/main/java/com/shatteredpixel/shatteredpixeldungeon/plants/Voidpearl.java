@@ -30,7 +30,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfCleansing;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfChaos;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
@@ -51,7 +51,7 @@ public class Voidpearl extends Plant {
 			((Hero) ch).curAction = null;
 
 			if (((Hero) ch).subClass == HeroSubClass.WARDEN) {
-				PotionOfCleansing.cleanse(ch, 1);
+				WandOfChaos.cleanse(ch, 1);
 			} else {
 
 				ch.die(Voidpearl.class);
