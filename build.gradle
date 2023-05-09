@@ -14,8 +14,8 @@ allprojects {
         appName = 'Elektrocheckers Pixel Dungeon'
         appPackageName = 'com.elektrochecker.shatteredpixeldungeonT'
 
-        appVersionCode = 688
-        appVersionName = '2.0.0T3'
+        appVersionCode = 701
+        appVersionName = '2.0.2T3'
 
         appJavaCompatibility = JavaVersion.VERSION_1_8
 

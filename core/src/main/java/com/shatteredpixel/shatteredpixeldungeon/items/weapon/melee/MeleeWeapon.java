@@ -29,26 +29,27 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Haste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LockedFloor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LostInventory;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MonkEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
-import com.shatteredpixel.shatteredpixeldungeon.effects.Transmuting;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
+import com.shatteredpixel.shatteredpixeldungeon.ui.AttackIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Image;
+import com.watabou.noosa.Visual;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
@@ -152,7 +153,7 @@ public class MeleeWeapon extends Weapon {
 	@Override
 	public boolean doEquip(Hero hero) {
 		if (super.doEquip(hero)){
-			ActionIndicator.updateIcon();
+			ActionIndicator.refresh();
 			return true;
 		}
 		return false;
@@ -161,7 +162,7 @@ public class MeleeWeapon extends Weapon {
 	@Override
 	public boolean equipSecondary(Hero hero) {
 		if (super.equipSecondary(hero)){
-			ActionIndicator.updateIcon();
+			ActionIndicator.refresh();
 			return true;
 		}
 		return false;
@@ -170,7 +171,7 @@ public class MeleeWeapon extends Weapon {
 	@Override
 	public boolean doUnequip(Hero hero, boolean collect, boolean single) {
 		if (super.doUnequip(hero, collect, single)){
-			ActionIndicator.updateIcon();
+			ActionIndicator.refresh();
 			return true;
 		}
 		return false;
@@ -437,7 +438,7 @@ public class MeleeWeapon extends Weapon {
 			LockedFloor lock = target.buff(LockedFloor.class);
 			if (charges < chargeCap()){
 				if (lock == null || lock.regenOn()){
-					partialCharge += 1/(45f-1.5f*(chargeCap()-charges)); // 45 to 30 turns per charge
+					partialCharge += 1/(40f-(chargeCap()-charges)); // 40 to 30 turns per charge
 				}
 
 				int points = ((Hero)target).pointsInTalent(Talent.WEAPON_RECHARGING);
@@ -458,9 +459,9 @@ public class MeleeWeapon extends Weapon {
 			if (Dungeon.hero.subClass == HeroSubClass.CHAMPION
 					&& secondCharges < secondChargeCap()) {
 				if (lock == null || lock.regenOn()) {
-					// 90 to 60 turns per charge without talent
-					// up to 60 to 40 turns per charge at max talent level
-					secondPartialCharge += secondChargeMultiplier() / (45f-2.5f*(secondChargeCap()-secondCharges));
+					// 80 to 60 turns per charge without talent
+					// up to 53.333 to 40 turns per charge at max talent level
+					secondPartialCharge += secondChargeMultiplier() / (40f-(secondChargeCap()-secondCharges));
 				}
 
 				if (secondPartialCharge >= 1) {
@@ -549,12 +550,38 @@ public class MeleeWeapon extends Weapon {
 		}
 
 		@Override
-		public Image actionIcon() {
+		public int actionIcon() {
+			return HeroIcon.WEAPON_SWAP;
+		}
+
+		@Override
+		public Visual primaryVisual() {
+			Image ico;
 			if (Dungeon.hero.belongings.weapon == null){
-				return new ItemSprite(ItemSpriteSheet.WEAPON_HOLDER);
+				ico = new HeroIcon(this);
  			} else {
-				return new ItemSprite(Dungeon.hero.belongings.weapon);
+				ico = new ItemSprite(Dungeon.hero.belongings.weapon);
 			}
+			ico.width += 4; //shift slightly to the left to separate from smaller icon
+			return ico;
+		}
+
+		@Override
+		public Visual secondaryVisual() {
+			Image ico;
+			if (Dungeon.hero.belongings.secondWep == null){
+				ico = new HeroIcon(this);
+			} else {
+				ico = new ItemSprite(Dungeon.hero.belongings.secondWep);
+			}
+			ico.scale.set(PixelScene.align(0.51f));
+			ico.brightness(0.6f);
+			return ico;
+		}
+
+		@Override
+		public int indicatorColor() {
+			return 0x5500BB;
 		}
 
 		@Override
@@ -577,6 +604,7 @@ public class MeleeWeapon extends Weapon {
 
 			ActionIndicator.setAction(this);
 			Item.updateQuickslot();
+			AttackIndicator.updateState();
 		}
 	}
 
