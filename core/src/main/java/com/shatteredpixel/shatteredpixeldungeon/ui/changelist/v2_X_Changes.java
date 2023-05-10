@@ -44,8 +44,28 @@ public class v2_X_Changes {
 	}
 
 	public static void add_modded_updates( ArrayList<ChangeInfo> changeInfos ) {
-		ChangeInfo changes = new ChangeInfo("v2.0.0T3 updates", true, "");
+		ChangeInfo changes = new ChangeInfo("v.T3 updates", true, "");
 		changes.hardlight(0x4060DD);
+		changeInfos.add(changes);
+
+		changes = new ChangeInfo("v2.0.2T3.1", false, null);
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton(new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
+		"updated game to include SHPD changes up to version 2.0.2."
+		));
+
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16), Messages.get(ChangesScene.class, "bugfixes"),
+		"fixed a bug where my new wands would still damage antimagic champions."
+		));
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.ARTIFACT_TALISMAN), "Talisman of foresight",
+				"The talisman of foresight now furrows tall grass when scrying."
+		));
+
+		changes = new ChangeInfo("v2.0.0T3", false, null);
+		changes.hardlight(Window.TITLE_COLOR);
 		changeInfos.add(changes);
 
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.EXOTIC_JERA), "New scrolls",

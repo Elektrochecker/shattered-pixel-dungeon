@@ -1111,7 +1111,8 @@ public abstract class Level implements Bundlable {
 			
 		case Terrain.HIGH_GRASS:
 		case Terrain.FURROWED_GRASS:
-			HighGrass.trample( this, cell);
+			//softFurrow set to false is the usual behaviour
+			HighGrass.trample( this, cell, false);
 			break;
 			
 		case Terrain.WELL:
