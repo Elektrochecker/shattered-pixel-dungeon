@@ -51,7 +51,6 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
-import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
@@ -137,12 +136,23 @@ public class ElementalBlast extends ArmorAbility {
 	@Override
 	protected void activate(ClassArmor armor, Hero hero, Integer target) {
 		Ballistica aim;
-		// Basically the direction of the aim only matters if it goes outside the map
-		// So we just ensure it won't do that.
-		if (hero.pos % Dungeon.level.width() > 10) {
-			aim = new Ballistica(hero.pos, hero.pos - 1, Ballistica.WONT_STOP);
+		//The direction of the aim only matters if it goes outside the map
+		//So we try to aim in the cardinal direction that has the most space
+		int x = hero.pos % Dungeon.level.width();
+		int y = hero.pos / Dungeon.level.width();
+
+		if (Math.max(x, Dungeon.level.width()-x) >= Math.max(y, Dungeon.level.height()-y)){
+			if (x > Dungeon.level.width()/2){
+				aim = new Ballistica(hero.pos, hero.pos - 1, Ballistica.WONT_STOP);
+			} else {
+				aim = new Ballistica(hero.pos, hero.pos + 1, Ballistica.WONT_STOP);
+			}
 		} else {
-			aim = new Ballistica(hero.pos, hero.pos + 1, Ballistica.WONT_STOP);
+			if (y > Dungeon.level.height()/2){
+				aim = new Ballistica(hero.pos, hero.pos - Dungeon.level.width(), Ballistica.WONT_STOP);
+			} else {
+				aim = new Ballistica(hero.pos, hero.pos + Dungeon.level.width(), Ballistica.WONT_STOP);
+			}
 		}
 
 		Class<? extends Wand> wandCls = null;
@@ -159,42 +169,40 @@ public class ElementalBlast extends ArmorAbility {
 
 		int projectileProps = Ballistica.STOP_SOLID | Ballistica.STOP_TARGET;
 
-		// ### Special Projectile Properties ###
-		// *** Wand of Disintegration *** wall piercing effect
-		if (wandCls == WandOfDisintegration.class) {
+		//### Special Projectile Properties ###
+		//*** Wand of Disintegration ***
+		if (wandCls == WandOfDisintegration.class){
 			projectileProps = Ballistica.STOP_TARGET;
 
-			// *** Wand of Fireblast *** goes through burnable terrain
-		} else if (wandCls == WandOfFireblast.class) {
+		//*** Wand of Fireblast ***
+		} else if (wandCls == WandOfFireblast.class){
 			projectileProps = projectileProps | Ballistica.IGNORE_SOFT_SOLID;
 
-			// *** Wand of Warding *** wall piercing effect
-		} else if (wandCls == WandOfWarding.class) {
+		//*** Wand of Warding ***
+		} else if (wandCls == WandOfWarding.class){
 			projectileProps = Ballistica.STOP_TARGET;
 
-			// *** wand of chaos *** wall piercing effect
-		} else if (wandCls == WandOfChaos.class) {
-			projectileProps = Ballistica.STOP_TARGET;
 		}
 
 		ConeAOE aoe = new ConeAOE(aim, aoeSize, 360, projectileProps);
 
-		for (Ballistica ray : aoe.outerRays) {
-			((MagicMissile) hero.sprite.parent.recycle(MagicMissile.class)).reset(
+		for (Ballistica ray : aoe.outerRays){
+			((MagicMissile)hero.sprite.parent.recycle( MagicMissile.class )).reset(
 					effectTypes.get(wandCls),
 					hero.sprite,
 					ray.path.get(ray.dist),
-					null);
+					null
+			);
 		}
 
-		final float effectMulti = 1f + 0.25f * hero.pointsInTalent(Talent.ELEMENTAL_POWER);
+		final float effectMulti = 1f + 0.25f*hero.pointsInTalent(Talent.ELEMENTAL_POWER);
 
-		// cast a ray 2/3 the way, and do effects
+		//cast a ray 2/3 the way, and do effects
 		Class<? extends Wand> finalWandCls = wandCls;
-		((MagicMissile) hero.sprite.parent.recycle(MagicMissile.class)).reset(
+		((MagicMissile)hero.sprite.parent.recycle( MagicMissile.class )).reset(
 				effectTypes.get(wandCls),
 				hero.sprite,
-				aim.path.get(aoeSize / 2),
+				aim.path.get(Math.min(aoeSize / 2, aim.path.size()-1)),
 				new Callback() {
 					@Override
 					public void call() {
@@ -307,35 +315,35 @@ public class ElementalBlast extends ArmorAbility {
 												knockback,
 												true,
 												true,
-												ElementalBlast.this.getClass());
+												ElementalBlast.this);
 									}
 
-									// *** Wand of Frost ***
-								} else if (finalWandCls == WandOfFrost.class) {
+								//*** Wand of Frost ***
+								} else if (finalWandCls == WandOfFrost.class){
 									if (mob.isAlive() && mob.alignment != Char.Alignment.ALLY) {
-										Buff.affect(mob, Frost.class, effectMulti * Frost.DURATION);
+										Buff.affect( mob, Frost.class, effectMulti*Frost.DURATION );
 									}
 
-									// *** Wand of Prismatic Light ***
-								} else if (finalWandCls == WandOfPrismaticLight.class) {
+								//*** Wand of Prismatic Light ***
+								} else if (finalWandCls == WandOfPrismaticLight.class){
 									if (mob.isAlive() && mob.alignment != Char.Alignment.ALLY) {
-										Buff.prolong(mob, Blindness.class, effectMulti * Blindness.DURATION / 2);
+										Buff.prolong(mob, Blindness.class, effectMulti*Blindness.DURATION/2);
 										charsHit++;
 									}
 
-									// *** Wand of Warding ***
-								} else if (finalWandCls == WandOfWarding.class) {
-									if (mob instanceof WandOfWarding.Ward) {
+								//*** Wand of Warding ***
+								} else if (finalWandCls == WandOfWarding.class){
+									if (mob instanceof WandOfWarding.Ward){
 										((WandOfWarding.Ward) mob).wandHeal(0, effectMulti);
 										charsHit++;
 									}
 
-									// *** Wand of Transfusion ***
-								} else if (finalWandCls == WandOfTransfusion.class) {
-									if (mob.alignment == Char.Alignment.ALLY || mob.buff(Charm.class) != null) {
-										int healing = Math.round(10 * effectMulti);
+								//*** Wand of Transfusion ***
+								} else if (finalWandCls == WandOfTransfusion.class){
+									if(mob.alignment == Char.Alignment.ALLY || mob.buff(Charm.class) != null){
+										int healing = Math.round(10*effectMulti);
 										int shielding = (mob.HP + healing) - mob.HT;
-										if (shielding > 0) {
+										if (shielding > 0){
 											healing -= shielding;
 											Buff.affect(mob, Barrier.class).setShield(shielding);
 										} else {

@@ -60,6 +60,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportat
 import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Journal;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
+import com.shatteredpixel.shatteredpixeldungeon.levels.MiningLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.RegularLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.Room;
@@ -428,6 +429,9 @@ public class GameScene extends PixelScene {
 							break;
 					}
 				}
+				if (Dungeon.level instanceof MiningLevel){
+					add(new WndStory(Messages.get(this, "blacksmith_quest_window_title") + ":\n\n" + Messages.get(this, "blacksmith_quest_window")).setDelays(0.4f, 0.4f));
+				}
 				if (Dungeon.hero.isAlive()) {
 					Badges.validateNoKilling();
 				}
@@ -549,16 +553,8 @@ public class GameScene extends PixelScene {
 				}
 			}
 
-			if (Dungeon.hero.buff(AscensionChallenge.class) != null
-				&& Dungeon.depth == Statistics.highestAscent){
+			if (Dungeon.hero.buff(AscensionChallenge.class) != null){
 				Dungeon.hero.buff(AscensionChallenge.class).saySwitch();
-				if (Dungeon.bossLevel()){
-					for (Char ch : Actor.chars()){
-						if (ch instanceof DriedRose.GhostHero){
-							((DriedRose.GhostHero) ch).sayAppeared();
-						}
-					}
-				}
 			}
 
 			InterlevelScene.mode = InterlevelScene.Mode.NONE;

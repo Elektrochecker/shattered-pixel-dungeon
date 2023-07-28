@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.0'
+        classpath 'com.android.tools.build:gradle:8.0.2'
     }
 }
 
@@ -14,8 +14,8 @@ allprojects {
         appName = 'Elektrocheckers Pixel Dungeon'
         appPackageName = 'com.elektrochecker.shatteredpixeldungeonT'
 
-        appVersionCode = 702
-        appVersionName = '2.0.2T3.1'
+        appVersionCode = 739
+        appVersionName = '2.1.4T3.1'
 
         appJavaCompatibility = JavaVersion.VERSION_1_8
 
@@ -24,8 +24,8 @@ allprojects {
         appAndroidTargetSDK = 33
 
         gdxVersion = '1.11.0'
-        gdxControllersVersion = '2.2.3-SNAPSHOT'
-        robovmVersion = '2.3.18'
+        gdxControllersVersion = '2.2.4-SNAPSHOT'
+        robovmVersion = '2.3.19'
     }
     version = appVersionName
 

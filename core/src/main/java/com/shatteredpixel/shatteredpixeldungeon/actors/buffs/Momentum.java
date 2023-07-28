@@ -30,7 +30,6 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
-import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIcon;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.noosa.BitmapText;
@@ -70,6 +69,8 @@ public class Momentum extends Buff implements ActionIndicator.Action {
 		if (freerunCooldown == 0 && !freerunning() && target.invisible > 0 && Dungeon.hero.pointsInTalent(Talent.SPEEDY_STEALTH) >= 1){
 			momentumStacks = Math.min(momentumStacks + 2, 10);
 			movedLastTurn = true;
+			ActionIndicator.setAction(this);
+			BuffIndicator.refreshHero();
 		}
 
 		if (freerunTurns > 0){
@@ -80,7 +81,7 @@ public class Momentum extends Buff implements ActionIndicator.Action {
 			momentumStacks = (int)GameMath.gate(0, momentumStacks-1, Math.round(momentumStacks * 0.667f));
 			if (momentumStacks <= 0) {
 				ActionIndicator.clearAction(this);
-				if (freerunCooldown <= 0) detach();
+				BuffIndicator.refreshHero();
 			} else {
 				ActionIndicator.refresh();
 			}
@@ -97,6 +98,7 @@ public class Momentum extends Buff implements ActionIndicator.Action {
 			postpone(target.cooldown()+(1/target.speed()));
 			momentumStacks = Math.min(momentumStacks + 1, 10);
 			ActionIndicator.setAction(this);
+			BuffIndicator.refreshHero();
 		}
 	}
 
@@ -124,12 +126,13 @@ public class Momentum extends Buff implements ActionIndicator.Action {
 	
 	@Override
 	public int icon() {
-		return BuffIndicator.MOMENTUM;
+		if (momentumStacks > 0 || freerunCooldown > 0)  return BuffIndicator.MOMENTUM;
+		else                                            return BuffIndicator.NONE;
 	}
 	
 	@Override
 	public void tintIcon(Image icon) {
-		if (freerunCooldown == 0){
+		if (freerunCooldown == 0 || freerunTurns > 0){
 			icon.hardlight(1,1,0);
 		} else {
 			icon.hardlight(0.5f,0.5f,1);

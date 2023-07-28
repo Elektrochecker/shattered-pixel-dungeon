@@ -1,0 +1,20 @@
+diff a/core/src/main/java/com/shatteredpixel/shatteredpixeldungeon/windows/WndRanking.java b/core/src/main/java/com/shatteredpixel/shatteredpixeldungeon/windows/WndRanking.java	(rejected hunks)
+@@ -86,11 +86,14 @@ public class WndRanking extends WndTabbed {
+ 		try {
+ 			Badges.loadGlobal();
+ 			Rankings.INSTANCE.loadGameData( rec );
+-			createControls();
++			if (Dungeon.hero != null) {
++				createControls();
++			} else {
++				hide();
++			}
+ 		} catch ( Exception e ) {
+-			Game.reportException(e);
+-			Dungeon.hero = null;
+-			createControls();
++			hide();
++			Game.scene().addToFront( new WndError( Messages.get(WndRanking.class, "error" )));
+ 		}
+ 	}
+ 	

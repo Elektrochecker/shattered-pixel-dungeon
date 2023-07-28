@@ -32,9 +32,7 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
-import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIcon;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
-import com.shatteredpixel.shatteredpixeldungeon.ui.DangerIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.BitmapText;
@@ -120,7 +118,7 @@ public class Berserk extends Buff implements ActionIndicator.Action {
 					BuffIndicator.refreshHero();
 					if (!target.isAlive()){
 						target.die(this);
-						if (!target.isAlive()) Dungeon.fail(this.getClass());
+						if (!target.isAlive()) Dungeon.fail(this);
 					}
 				}
 
@@ -129,7 +127,7 @@ public class Berserk extends Buff implements ActionIndicator.Action {
 				power = 0f;
 				if (!target.isAlive()){
 					target.die(this);
-					if (!target.isAlive()) Dungeon.fail(this.getClass());
+					if (!target.isAlive()) Dungeon.fail(this);
 				}
 
 			}
@@ -149,8 +147,7 @@ public class Berserk extends Buff implements ActionIndicator.Action {
 					detach();
 				}
 			}
-		} else if (state == State.RECOVERING && levelRecovery == 0
-				&& (target.buff(LockedFloor.class) == null || target.buff(LockedFloor.class).regenOn())){
+		} else if (state == State.RECOVERING && levelRecovery == 0 && Regeneration.regenOn()){
 			turnRecovery--;
 			if (turnRecovery <= 0){
 				turnRecovery = 0;
