@@ -21,3 +21,6 @@ local.properties
 
 #windows shortcut files
 *.lnk
+
+#git rejects
+*.rej
