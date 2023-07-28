@@ -64,7 +64,7 @@ public class BloodOrb extends Artifact {
 	@Override
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions = super.actions(hero);
-		if (isEquipped(hero) && charge > 0 && !cursed && hero.buff(MagicImmune.class) == null) {
+		if (isEquipped(hero) && !cursed && hero.buff(MagicImmune.class) == null) {
 			actions.add(AC_CAST);
 		}
 		return actions;
@@ -171,7 +171,7 @@ public class BloodOrb extends Artifact {
 		hero.damage(dmgCost, this);
 
 		// upgrade the artifact
-		int expNeeded = 25 + level() * 10;
+		int expNeeded = 25 + level() * 8;
 		if (exp > expNeeded && level() < levelCap) {
 			exp -= expNeeded;
 			GLog.p(Messages.get(this, "levelup"));
