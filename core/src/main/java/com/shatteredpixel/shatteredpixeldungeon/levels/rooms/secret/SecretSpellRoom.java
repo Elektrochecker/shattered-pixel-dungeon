@@ -96,5 +96,4 @@ public class SecretSpellRoom extends SecretRoom {
 			}
 		}
 	}
-
 }

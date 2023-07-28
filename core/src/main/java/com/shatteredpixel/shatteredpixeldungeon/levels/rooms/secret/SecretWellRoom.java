@@ -22,6 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.levels.rooms.secret;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.WaterOfAwareness;
+import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.WaterOfEnchantment;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.WaterOfHealth;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.WellWater;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
@@ -33,7 +34,7 @@ import com.watabou.utils.Random;
 public class SecretWellRoom extends SecretRoom {
 	
 	private static final Class<?>[] WATERS =
-			{WaterOfAwareness.class, WaterOfHealth.class};
+			{WaterOfHealth.class, WaterOfEnchantment.class};
 	
 	@Override
 	public boolean canConnect(Point p) {

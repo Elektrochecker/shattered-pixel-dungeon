@@ -48,6 +48,7 @@ public class Speck extends Image {
 	public static final int BUBBLE      = 12;
 	public static final int STEAM       = 13;
 	public static final int COIN        = 14;
+	public static final int ENCHANT     = 15;
 	
 	public static final int DISCOVER    = 101;
 	public static final int EVOKE       = 102;
@@ -285,6 +286,12 @@ public class Speck extends Image {
 			scale.set( Random.Float( 0.8f, 1 ) );
 			lifespan = Random.Float( 0.8f, 1.5f );
 			break;
+
+		case ENCHANT:
+			speed.set( 0, -15 );
+			scale.set( Random.Float( 0.8f, 1 ) );
+			lifespan = Random.Float( 0.8f, 1.5f );
+			break;
 			
 		case STEAM:
 			speed.y = -Random.Float( 10, 15 );
@@ -466,6 +473,10 @@ public class Speck extends Image {
 				break;
 				
 			case BUBBLE:
+				am = p < 0.2f ? p * 5 : 1;
+				break;
+
+			case ENCHANT:
 				am = p < 0.2f ? p * 5 : 1;
 				break;
 				
