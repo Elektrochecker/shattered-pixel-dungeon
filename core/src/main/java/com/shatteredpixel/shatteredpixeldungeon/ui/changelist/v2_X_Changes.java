@@ -56,6 +56,31 @@ public class v2_X_Changes {
 		changes.hardlight(0x4060DD);
 		changeInfos.add(changes);
 
+		changes = new ChangeInfo("v2.1.4T3.2", false, null);
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton(new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
+			"updated game to include SHPD changes up to version 2.1.4.\n\n" +
+			"secret well rooms no longer spawn wells of awareness\n\n" +
+			"slightly buffed loot quantity from locked and secret library (scroll) rooms"
+		));
+
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16), Messages.get(ChangesScene.class, "bugfixes"),
+		"fixed a bug where the orb of sacrifice had no button to cast directly from inverntory."
+		));
+		
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.AQUA_BLAST), "Hidden rooms",
+				"A new hidden room type containing spells has been added."
+		));
+
+		changes.addButton( new ChangeButton(new Image(Assets.Environment.TILES_SEWERS, 32, 16, 16, 16), "new well",
+				"a new type of well has been added: the well of enchantment.\n\n" +
+				"Drinking water from this well will enchant the heros equipment, and throwing an item inside will enchant it with a higher chance for rare enchants.\n\n" +
+				"Single item enchanting rate: _40%_ uncommon, _60%_ rare"
+		));
+
+		
 		changes = new ChangeInfo("v2.0.2T3.1", false, null);
 		changes.hardlight(Window.TITLE_COLOR);
 		changeInfos.add(changes);

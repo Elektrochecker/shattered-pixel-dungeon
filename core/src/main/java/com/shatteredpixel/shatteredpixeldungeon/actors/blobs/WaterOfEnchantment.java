@@ -52,11 +52,10 @@ public class WaterOfEnchantment extends WellWater {
 
 			} else if (item instanceof Armor && item.isEquipped(Dungeon.hero)) {
 				((Armor) item).inscribe();
-
 			}
 		}
 
-		hero.sprite.emitter().start(Speck.factory(Speck.ENCHANT), 0.4f, 4);
+		hero.sprite.emitter().start(Speck.factory(Speck.ENCHANT2), 0.4f, 4);
 
 		CellEmitter.get(hero.pos).start(ShaftParticle.FACTORY, 0.2f, 3);
 
@@ -69,29 +68,29 @@ public class WaterOfEnchantment extends WellWater {
 
 	@Override
 	protected Item affectItem(final Item item, int pos) {
-		//stronger enchant for single item
+		// stronger enchant for single item
 		if (item instanceof Weapon) {
 
-			//60% uncommon, 40% rare
-			if (Math.random() < 0.6) {
+			// 40% uncommon, 60% rare
+			if (Math.random() < 0.4) {
 				((Weapon) item).enchant(Weapon.Enchantment.randomUncommon());
 			} else {
 				((Weapon) item).enchant(Weapon.Enchantment.randomRare());
 			}
 
-			CellEmitter.get(pos).start(Speck.factory(Speck.ENCHANT), 0.4f, 4);
+			CellEmitter.get(pos).start(Speck.factory(Speck.ENCHANT2), 0.4f, 4);
 			Sample.INSTANCE.play(Assets.Sounds.DRINK);
 			return item;
 		} else if (item instanceof Armor) {
 
-			//60% uncommon, 40% rare
-			if (Math.random() < 0.6) {
+			// 40% uncommon, 60% rare
+			if (Math.random() < 0.4) {
 				((Armor) item).inscribe(Armor.Glyph.randomUncommon());
 			} else {
 				((Armor) item).inscribe(Armor.Glyph.randomRare());
 			}
 
-			CellEmitter.get(pos).start(Speck.factory(Speck.ENCHANT), 0.4f, 4);
+			CellEmitter.get(pos).start(Speck.factory(Speck.ENCHANT2), 0.4f, 4);
 			Sample.INSTANCE.play(Assets.Sounds.DRINK);
 			return item;
 		}
