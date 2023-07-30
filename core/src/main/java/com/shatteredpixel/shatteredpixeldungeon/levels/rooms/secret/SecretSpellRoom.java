@@ -24,7 +24,9 @@ package com.shatteredpixel.shatteredpixeldungeon.levels.rooms.secret;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.AquaBlast;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.BeaconOfReturning;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.CurseInfusion;
+import com.shatteredpixel.shatteredpixeldungeon.items.spells.MagicBridge;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.PhaseShift;
+import com.shatteredpixel.shatteredpixeldungeon.items.spells.PrismaticImageSpell;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.ReclaimTrap;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.Recycle;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.Spell;
@@ -55,11 +57,13 @@ public class SecretSpellRoom extends SecretRoom {
 	private static HashMap<Class<? extends Spell>, Float> spellChances = new HashMap<>();
 	static {
 		spellChances.put(ReclaimTrap.class, 3f);
+		spellChances.put(MagicBridge.class, 3f);
+		spellChances.put(PrismaticImageSpell.class, 2f);
+		spellChances.put(Transfiguration.class, 2f);
 		spellChances.put(AquaBlast.class, 2f);
 		spellChances.put(SummonElemental.class, 2f);
 		spellChances.put(PhaseShift.class, 2f);
 		spellChances.put(WildEnergy.class, 2f);
-		spellChances.put(Transfiguration.class, 2f);
 		spellChances.put(BeaconOfReturning.class, 1f);
 		spellChances.put(CurseInfusion.class, 1f);
 		spellChances.put(Recycle.class, 1f);

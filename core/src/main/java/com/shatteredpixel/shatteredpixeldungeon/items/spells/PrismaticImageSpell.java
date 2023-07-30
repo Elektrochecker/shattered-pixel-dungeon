@@ -76,7 +76,7 @@ public class PrismaticImageSpell extends Spell {
 			inputs = new Class[] { Ghostbulb.Seed.class, ArcaneCatalyst.class };
 			inQuantity = new int[] { 1, 1 };
 
-			cost = 8;
+			cost = 12;
 
 			output = PrismaticImageSpell.class;
 			outQuantity = 2;

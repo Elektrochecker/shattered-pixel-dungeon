@@ -270,11 +270,11 @@ public class Generator {
 					PotionOfMindVision.class,
 					PotionOfFrost.class,
 					PotionOfLiquidFlame.class,
-					PotionOfToxicGas.class,
+					PotionOfParalyticGas.class,
 					PotionOfHaste.class,
 					PotionOfInvisibility.class,
 					PotionOfLevitation.class,
-					PotionOfParalyticGas.class,
+					PotionOfToxicGas.class,
 					PotionOfPurity.class,
 					PotionOfExperience.class};
 			POTION.defaultProbs = new float[]{ 0, 6, 4, 3, 3, 3, 2, 2, 2, 2, 2, 1 };

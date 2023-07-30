@@ -157,7 +157,7 @@ public class TitleScene extends PixelScene {
 		btnBadges.icon(Icons.get(Icons.BADGES));
 		add(btnBadges);
 
-		StyledButton btnNews = new NewsButton(GREY_TR, Messages.get(this, "news"));
+		StyledButton btnNews = new NewsButton(GREY_TR, "Source");
 		btnNews.icon(Icons.get(Icons.NEWS));
 		add(btnNews);
 
@@ -262,7 +262,8 @@ public class TitleScene extends PixelScene {
 		@Override
 		protected void onClick() {
 			super.onClick();
-			ShatteredPixelDungeon.switchNoFade( NewsScene.class );
+			String link = "https://github.com/Elektrochecker/shattered-pixel-dungeon/releases";
+			ShatteredPixelDungeon.platform.openURI(link);
 		}
 	}
 

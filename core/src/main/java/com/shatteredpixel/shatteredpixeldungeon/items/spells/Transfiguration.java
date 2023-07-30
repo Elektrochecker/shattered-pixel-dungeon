@@ -26,13 +26,13 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfCorrosiveGas;
+import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfDragonsBreath;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.ConeAOE;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 
 public class Transfiguration extends Spell {
@@ -43,16 +43,9 @@ public class Transfiguration extends Spell {
 
 	@Override
 	protected void onCast(Hero hero) {
-		int[] map = Dungeon.level.map;
-
 		hero.sprite.operate(hero.pos);
 		updateQuickslot();
 		Invisibility.dispel();
-
-		if(map[hero.pos] == Terrain.OPEN_DOOR) {
-			GLog.i("it would be unwise using the spell standing in a door...");
-			return;
-		}
 
 		detach( curUser.belongings.backpack );
 		hero.spendAndNext( 1f );
@@ -122,6 +115,7 @@ public class Transfiguration extends Spell {
 					Level.set( cell, Terrain.WATER, Dungeon.level);
 					break;
 
+			//destroy obstacles
 			case Terrain.BOOKSHELF:
 				Level.set( cell, Terrain.EMBERS, Dungeon.level);
 				break;
@@ -129,6 +123,7 @@ public class Transfiguration extends Spell {
 				Level.set( cell, Terrain.EMBERS, Dungeon.level);
 				break;
 
+			//change floor under statues
 			case Terrain.STATUE:
 				Level.set( cell, Terrain.STATUE_SP, Dungeon.level);
 				break;
@@ -152,7 +147,7 @@ public class Transfiguration extends Spell {
 			inputs = new Class[] { PotionOfCorrosiveGas.class, ArcaneCatalyst.class };
 			inQuantity = new int[] { 1, 1 };
 
-			cost = 6;
+			cost = 4;
 
 			output = Transfiguration.class;
 			outQuantity = 8;
