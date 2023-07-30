@@ -163,7 +163,7 @@ public class BloodOrb extends Artifact {
 		}
 
 		// pay life cost
-		int dmgCost = hero.HP / 5;
+		int dmgCost = hero.HP / 6;
 		dmgCost = Math.max(dmgCost, hero.lvl / 5 + 1);
 		exp += dmgCost + 2;
 		dmgCost /= RingOfTenacity.damageMultiplier(hero);
@@ -171,7 +171,7 @@ public class BloodOrb extends Artifact {
 		hero.damage(dmgCost, this);
 
 		// upgrade the artifact
-		int expNeeded = 25 + level() * 8;
+		int expNeeded = 25 + level() * 6;
 		if (exp > expNeeded && level() < levelCap) {
 			exp -= expNeeded;
 			GLog.p(Messages.get(this, "levelup"));

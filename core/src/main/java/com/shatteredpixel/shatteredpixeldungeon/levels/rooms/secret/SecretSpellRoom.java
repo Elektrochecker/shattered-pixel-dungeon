@@ -30,6 +30,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.spells.Recycle;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.Spell;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.SummonElemental;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.TelekineticGrab;
+import com.shatteredpixel.shatteredpixeldungeon.items.spells.Transfiguration;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.WildEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.painters.Painter;
@@ -58,6 +59,7 @@ public class SecretSpellRoom extends SecretRoom {
 		spellChances.put(SummonElemental.class, 2f);
 		spellChances.put(PhaseShift.class, 2f);
 		spellChances.put(WildEnergy.class, 2f);
+		spellChances.put(Transfiguration.class, 2f);
 		spellChances.put(BeaconOfReturning.class, 1f);
 		spellChances.put(CurseInfusion.class, 1f);
 		spellChances.put(Recycle.class, 1f);

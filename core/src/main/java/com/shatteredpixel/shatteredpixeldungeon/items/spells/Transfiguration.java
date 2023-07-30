@@ -112,27 +112,21 @@ public class Transfiguration extends Spell {
 			case Terrain.GRASS:
 				Level.set( cell, Terrain.HIGH_GRASS, Dungeon.level);
 				break;
-			case Terrain.EMBERS:
-				Level.set( cell, Terrain.WATER, Dungeon.level);
-				break;
 			case Terrain.HIGH_GRASS:
 				Level.set( cell, Terrain.EMBERS, Dungeon.level);
 				break;
 			case Terrain.FURROWED_GRASS:
 				Level.set( cell, Terrain.EMBERS, Dungeon.level);
 				break;
+			case Terrain.EMBERS:
+					Level.set( cell, Terrain.WATER, Dungeon.level);
+					break;
 
 			case Terrain.BOOKSHELF:
-				Level.set( cell, Terrain.GRASS, Dungeon.level);
+				Level.set( cell, Terrain.EMBERS, Dungeon.level);
 				break;
 			case Terrain.BARRICADE:
-				Level.set( cell, Terrain.BOOKSHELF, Dungeon.level);
-				break;
-			case Terrain.DOOR:
-				Level.set( cell, Terrain.CHASM, Dungeon.level);
-				break;
-			case Terrain.OPEN_DOOR:
-				Level.set( cell, Terrain.CHASM, Dungeon.level);
+				Level.set( cell, Terrain.EMBERS, Dungeon.level);
 				break;
 
 			case Terrain.STATUE:

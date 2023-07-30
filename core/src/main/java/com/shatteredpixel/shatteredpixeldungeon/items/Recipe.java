@@ -48,6 +48,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.spells.ArcaneCatalyst;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.BeaconOfReturning;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.CurseInfusion;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.FeatherFall;
+import com.shatteredpixel.shatteredpixeldungeon.items.spells.MagicBridge;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.MagicalInfusion;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.PhaseShift;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.PrismaticImageSpell;
@@ -209,7 +210,8 @@ public abstract class Recipe {
 		new SummonElemental.Recipe(),
 		new StewedMeat.twoMeat(),
 		new PrismaticImageSpell.Recipe(),
-		new Transfiguration.Recipe()
+		new Transfiguration.Recipe(),
+		new MagicBridge.Recipe()
 	};
 	
 	private static Recipe[] threeIngredientRecipes = new Recipe[]{

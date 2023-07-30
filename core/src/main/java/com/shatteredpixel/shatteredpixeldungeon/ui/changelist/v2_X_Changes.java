@@ -24,6 +24,9 @@ package com.shatteredpixel.shatteredpixeldungeon.ui.changelist;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
+import com.shatteredpixel.shatteredpixeldungeon.items.spells.MagicBridge;
+import com.shatteredpixel.shatteredpixeldungeon.items.spells.PrismaticImageSpell;
+import com.shatteredpixel.shatteredpixeldungeon.items.spells.Transfiguration;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Whip;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.ChangesScene;
@@ -61,23 +64,36 @@ public class v2_X_Changes {
 		changeInfos.add(changes);
 
 		changes.addButton(new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
-			"updated game to include SHPD changes up to version 2.1.4.\n\n" +
-			"secret well rooms no longer spawn wells of awareness\n\n" +
-			"slightly buffed loot quantity from locked and secret library (scroll) rooms"
+			"Updated game to include SHPD changes up to version 2.1.4.\n\n" +
+			"Other languages have been restored, but only english is supported by the content from this mod.\n" +
+			"Default language is now always english.\n\n" +
+			"All heroes are now unlocked by default.\n\n" +
+			"Secret well rooms no longer spawn wells of awareness.\n\n" +
+			"Slightly buffed loot quantity from locked and secret library (scroll) rooms.\n\n" +
+			"Slightly buffe wand of cosmic travel low roll damage scaling\n\n"+
+			"Orb of sacrifice levelup cost reduced further, slightly decreased health cost and description is more transparent."
 		));
 
 		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16), Messages.get(ChangesScene.class, "bugfixes"),
-		"fixed a bug where the orb of sacrifice had no button to cast directly from inverntory."
+			"fixed a bug where the orb of sacrifice had no button to cast directly from inverntory.\n\n" +
+			"added missing weapon textures from v2.1"
 		));
 		
-		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.AQUA_BLAST), "Hidden rooms",
+		changes.addButton( new ChangeButton(new Image(Assets.Environment.TILES_SEWERS, 8*16, 4*16, 16, 16), "Hidden rooms",
 				"A new hidden room type containing spells has been added."
 		));
 
-		changes.addButton( new ChangeButton(new Image(Assets.Environment.TILES_SEWERS, 32, 16, 16, 16), "new well",
+		changes.addButton( new ChangeButton(new Image(Assets.Environment.TILES_SEWERS, 32, 16, 16, 16), "New well",
 				"a new type of well has been added: the well of enchantment.\n\n" +
 				"Drinking water from this well will enchant the heros equipment, and throwing an item inside will enchant it with a higher chance for rare enchants.\n\n" +
 				"Single item enchanting rate: _40%_ uncommon, _60%_ rare"
+		));
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.TRANSFIGURATION), "New spells",
+				"three new spells have been added:\n\n" +
+				"_Shifting Lands_:\n" + Messages.get(Transfiguration.class, "desc") + "\n\n" +
+				"_Magical Bridge_:\n" + Messages.get(MagicBridge.class, "desc") + "\n\n" +
+				"_Prismatic Image_:\n" + Messages.get(PrismaticImageSpell.class, "desc") + "\n Replaces previously removed scroll of prismatic image."
 		));
 
 		
