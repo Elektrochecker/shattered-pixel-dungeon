@@ -56,6 +56,7 @@ public class Terrain {
 	public static final int STATUE_SP		= 26;
 	public static final int BOOKSHELF		= 27;
 	public static final int ALCHEMY			= 28;
+	public static final int RUNETABLE		= 32;
 
 	public static final int WATER		    = 29;
 	

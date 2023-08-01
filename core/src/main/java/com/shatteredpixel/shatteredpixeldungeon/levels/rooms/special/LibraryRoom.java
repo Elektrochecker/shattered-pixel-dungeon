@@ -31,6 +31,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRemoveCurs
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.levels.painters.Painter;
+import com.watabou.utils.Point;
 import com.watabou.utils.Random;
 
 public class LibraryRoom extends SpecialRoom {
@@ -44,8 +45,11 @@ public class LibraryRoom extends SpecialRoom {
 		
 		Painter.fill( level, left + 1, top+1, width() - 2, 1 , Terrain.BOOKSHELF );
 		Painter.drawInside(level, this, entrance, 1, Terrain.EMPTY_SP );
+
+		Point table = center();
+		Painter.set( level, table, Terrain.RUNETABLE );
 		
-		int n = Random.NormalIntRange( 2, 4 );
+		int n = Random.NormalIntRange( 2, 3 );
 		for (int i=0; i < n; i++) {
 			int pos;
 			do {

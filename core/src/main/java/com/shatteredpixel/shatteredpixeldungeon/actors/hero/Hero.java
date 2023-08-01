@@ -1661,7 +1661,7 @@ public class Hero extends Char {
 		Char ch = Actor.findChar( cell );
 		Heap heap = Dungeon.level.heaps.get( cell );
 
-		if (Dungeon.level.map[cell] == Terrain.ALCHEMY && cell != pos) {
+		if ((Dungeon.level.map[cell] == Terrain.ALCHEMY || Dungeon.level.map[cell] == Terrain.RUNETABLE) && cell != pos) {
 			
 			curAction = new HeroAction.Alchemy( cell );
 			

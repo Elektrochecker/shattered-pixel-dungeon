@@ -184,9 +184,11 @@ public class DungeonTileSheet {
 	public static final int FLAT_BARRICADE      = FLAT_OTHER+4;
 	public static final int FLAT_HIGH_GRASS     = FLAT_OTHER+5;
 	public static final int FLAT_FURROWED_GRASS = FLAT_OTHER+6;
-
+	
 	public static final int FLAT_HIGH_GRASS_ALT = FLAT_OTHER+8;
 	public static final int FLAT_FURROWED_ALT   = FLAT_OTHER+9;
+
+	public static final int FLAT_RUNE_TABLE 	= FLAT_OTHER+11;
 
 
 	/**********************************************************************
@@ -275,6 +277,7 @@ public class DungeonTileSheet {
 	public static final int RAISED_BARRICADE        = RAISED_OTHER+4;
 	public static final int RAISED_HIGH_GRASS       = RAISED_OTHER+5;
 	public static final int RAISED_FURROWED_GRASS   = RAISED_OTHER+6;
+	public static final int RAISED_RUNE_TABLE   	= RAISED_OTHER+13;
 
 	//these are part of a layer that appears above characters, despite not being part of overhang
 	public static final int RAISED_HIGH_GRASS_OVER      = RAISED_OTHER+7;
@@ -401,6 +404,7 @@ public class DungeonTileSheet {
 		directFlatVisuals.put(Terrain.STATUE,           FLAT_STATUE);
 		directFlatVisuals.put(Terrain.STATUE_SP,        FLAT_STATUE_SP);
 		directFlatVisuals.put(Terrain.ALCHEMY,          FLAT_ALCHEMY_POT);
+		directFlatVisuals.put(Terrain.RUNETABLE,        FLAT_RUNE_TABLE);
 		directFlatVisuals.put(Terrain.BARRICADE,        FLAT_BARRICADE);
 		directFlatVisuals.put(Terrain.HIGH_GRASS,       FLAT_HIGH_GRASS);
 		directFlatVisuals.put(Terrain.FURROWED_GRASS,   FLAT_FURROWED_GRASS);

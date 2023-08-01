@@ -1,4 +1,4 @@
-Based on sattered pixel dungeon version 2.1.4.
+Based on shattered pixel dungeon version 2.1.4.
 https://github.com/00-Evan/shattered-pixel-dungeon
 
 # Summary of content

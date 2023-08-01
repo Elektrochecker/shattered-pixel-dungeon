@@ -1478,6 +1478,8 @@ public abstract class Level implements Bundlable {
 				return Messages.get(Level.class, "bookshelf_name");
 			case Terrain.ALCHEMY:
 				return Messages.get(Level.class, "alchemy_name");
+			case Terrain.RUNETABLE:
+				return Messages.get(Level.class, "runetable_name");
 			default:
 				return Messages.get(Level.class, "default_name");
 		}
@@ -1517,6 +1519,8 @@ public abstract class Level implements Bundlable {
 				return Messages.get(Level.class, "statue_desc");
 			case Terrain.ALCHEMY:
 				return Messages.get(Level.class, "alchemy_desc");
+			case Terrain.RUNETABLE:
+				return Messages.get(Level.class, "runetable_desc");
 			case Terrain.EMPTY_WELL:
 				return Messages.get(Level.class, "empty_well_desc");
 			default:
