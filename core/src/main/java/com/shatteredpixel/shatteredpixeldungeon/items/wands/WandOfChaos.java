@@ -44,10 +44,8 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Cripple;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Amok;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy.AntiMagic;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bleeding;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hex;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
 
@@ -132,7 +130,6 @@ public class WandOfChaos extends DamageWand {
 			ch.sprite.centerEmitter().burst(PurpleParticle.BURST, Random.IntRange(1, 2));
 			ch.sprite.flash();
 
-			// apply frost
 			if (ch.isAlive()) {
 				switch (Random.Int(9)) {
 					default:
@@ -171,12 +168,26 @@ public class WandOfChaos extends DamageWand {
 		}
 	}
 
+	public static void cleanse(Char ch, float duration) {
+		for (Buff b : ch.buffs()) {
+			if (b.type == Buff.buffType.NEGATIVE
+					&& !(b instanceof AllyBuff)
+					&& !(b instanceof LostInventory)) {
+				b.detach();
+			}
+		}
+		Buff.affect(ch, PotionOfCleansing.Cleanse.class, duration);
+	}
+
+	private int distance() {
+		return buffedLvl() * 2 + 6;
+	}
+
 	@Override
 	public void onHit(MagesStaff staff, Char attacker, Char defender, int damage) {
-		float procChance = 1f/2.5f*procChanceMultiplier(attacker);
+		float procChance = 1f / 2.5f * procChanceMultiplier(attacker);
 
 		if (defender.HP <= damage && Random.Float() < procChance) {
-			// int buffOffset = ((Hero) attacker).pointsInTalent(Talent.EMPOWERED_STRIKE); // max. 3
 			switch (Random.Int(7)) {
 				default:
 				case 0:
@@ -207,21 +218,6 @@ public class WandOfChaos extends DamageWand {
 					break;
 			}
 		}
-	}
-
-	public static void cleanse(Char ch, float duration){
-		for (Buff b : ch.buffs()){
-			if (b.type == Buff.buffType.NEGATIVE
-					&& !(b instanceof AllyBuff)
-					&& !(b instanceof LostInventory)){
-				b.detach();
-			}
-		}
-		Buff.affect(ch, PotionOfCleansing.Cleanse.class, duration);
-	}
-
-	private int distance() {
-		return buffedLvl() * 2 + 6;
 	}
 
 	@Override

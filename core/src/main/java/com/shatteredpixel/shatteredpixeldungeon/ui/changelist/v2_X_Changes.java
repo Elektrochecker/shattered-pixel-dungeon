@@ -59,6 +59,28 @@ public class v2_X_Changes {
 		changes.hardlight(0x4060DD);
 		changeInfos.add(changes);
 
+		changes = new ChangeInfo("v2.1.4T3.3", false, null);
+		changes.hardlight(Window.TITLE_COLOR);
+		changeInfos.add(changes);
+
+		changes.addButton(new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
+			"_-_reduced library room loot amount to 2-3 scrolls."
+		));
+
+		changes.addButton(new ChangeButton(new Image(Assets.Sprites.SPINNER, 144, 0, 16, 16), Messages.get(ChangesScene.class, "bugfixes"),
+			"_-_fixed a bug where the ring of wealth would not drop wands.\n\n" +
+			"_-_ fixed some spelling mistakes in item descriptions."
+		));
+
+		changes.addButton( new ChangeButton(new Image(Assets.Environment.TILES_CITY, 11*16+3, 5*16+2, 10, 12), "Rune table",
+				"The rune table spawns in library rooms and lets the player perform alchemy."
+		));
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.RING_GARNET), "Ring of Might",
+				"The Ring of might has been reworked to focus more on HP rather than strength.\n" +
+				"It now grants +1 STR at all levels, but max HP gain is increased from 3.5% to 15%."
+		));
+
 		changes = new ChangeInfo("v2.1.4T3.2", false, null);
 		changes.hardlight(Window.TITLE_COLOR);
 		changeInfos.add(changes);
@@ -70,8 +92,8 @@ public class v2_X_Changes {
 			"_-_Added a source button that takes players to this projects github page.\n\n" +
 			"_-_All heroes are now unlocked by default.\n\n" +
 			"_-_Secret well rooms no longer spawn wells of awareness.\n\n" +
-			"_-_Slightly buffed loot quantity from locked and secret library (scroll) rooms.\n\n" +
-			"_-_Slightly buffed wand of cosmic travel low roll damage scaling\n\n"+
+			"_-_buffed loot quantity from locked and secret library (scroll) rooms to 2-4 scrolls, up from 1-3.\n\n" +
+			"_-_Slightly buffed wand of cosmic travel low roll damage scaling.\n\n"+
 			"_-_Orb of sacrifice levelup cost reduced, slightly decreased health cost and description is more transparent.\n\n" +
 			"_-_Increased spawn rate of paralytic gas potions, and decreased spawn rate of potions of toxic gas."
 		));
@@ -95,7 +117,7 @@ public class v2_X_Changes {
 				"three new spells have been added:\n\n" +
 				"_Shifting Lands_:\n" + Messages.get(Transfiguration.class, "desc") + "\n\n" +
 				"_Magical Bridge_:\n" + Messages.get(MagicBridge.class, "desc") + "\n\n" +
-				"_Prismatic Image_:\n" + Messages.get(PrismaticImageSpell.class, "desc") + "\n Replaces previously removed scroll of prismatic image."
+				"_Prismatic Image_:\n" + Messages.get(PrismaticImageSpell.class, "desc") + "\nReplaces previously removed scroll of prismatic image."
 		));
 
 		
@@ -139,7 +161,7 @@ public class v2_X_Changes {
 		));
 
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.SCROLL_NAUDIZ), "Scroll of mirror image",
-				"The scroll of mirror image has benn removed. Why? Cause fuck 'em, that's why."
+				"The scroll of mirror image has been removed. Why? Cause fuck 'em, that's why."
 		));
 
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.ARTIFACT_TOOLKIT), "Changed recipes",
