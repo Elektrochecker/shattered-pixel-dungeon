@@ -24,9 +24,10 @@ https://github.com/00-Evan/shattered-pixel-dungeon
 ### Other
 - void and ghost darts
 
-## Plants / Environment
+## Dungeon / Environment
 - ghostbulb (plant)
 - voidpearl (plant)
+- rune tables (alchemy)
 
 ## Mechanics / other changes
 - battlemage and elemental blast effects for all new wands
@@ -35,6 +36,7 @@ https://github.com/00-Evan/shattered-pixel-dungeon
 - a new secret room containing spells as loot
 - talisman of foresight furrows grass
 - ring of wealth drops wands
+- ring of might rework
 - slightly changed recipes
 - removed scroll of mirror image
 - added scroll rune "JERA"

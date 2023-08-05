@@ -77,7 +77,7 @@ public class v2_X_Changes {
 		));
 
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.RING_GARNET), "Ring of Might",
-				"The Ring of might has been reworked to focus more on HP rather than strength.\n" +
+				"The ring of might has been reworked to focus more on HP rather than strength.\n" +
 				"It now grants +1 STR at all levels, but max HP gain is increased from 3.5% to 15%."
 		));
 
